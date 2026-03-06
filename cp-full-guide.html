@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OperatorsHub – CP Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; color: #333; }
+  header { background: #1a9e8f; color: white; padding: 20px 40px; }
+  header h1 { font-size: 20px; font-weight: 700; }
+  header p { font-size: 12px; opacity: 0.8; margin-top: 3px; }
+  .content { padding: 28px 40px; max-width: 1000px; margin: 0 auto; }
+  .section-title { font-size: 16px; font-weight: 700; color: #1a9e8f; border-bottom: 2px solid #1a9e8f; padding-bottom: 6px; margin: 32px 0 18px; }
+
+  .screen-card { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 28px; overflow: hidden; }
+  .screen-header { background: #f8f9fa; border-bottom: 1px solid #e8e8e8; padding: 12px 18px; display: flex; align-items: center; gap: 10px; }
+  .screen-id { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; background: #e8f0fe; color: #3b6fd4; }
+  .screen-name { font-size: 13px; font-weight: 600; color: #555; }
+  .screen-body { display: flex; }
+
+  .diagram-wrap { flex: 1; padding: 20px; background: #fafafa; border-right: 1px solid #eee; }
+  .mockup { background: white; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+  .mockup-topbar { background: #1a9e8f; height: 4px; }
+  .mockup-inner { padding: 20px 24px 24px; }
+  .mockup-breadcrumb { font-size: 10px; color: #1a9e8f; margin-bottom: 2px; }
+  .mockup-title { font-size: 20px; font-weight: 300; color: #333; margin-bottom: 16px; }
+  .section-bar { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #eee; padding: 10px 0; margin-bottom: 4px; }
+  .section-bar-label { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: #333; }
+  .section-bar-icons { display: flex; align-items: center; gap: 6px; }
+  .check-icon { width: 16px; height: 16px; border-radius: 50%; background: #1a9e8f; color: white; font-size: 8px; display: flex; align-items: center; justify-content: center; }
+  .chevron { color: #aaa; font-size: 10px; }
+
+  .sub-label { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin: 14px 0 8px; }
+
+  .afield { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .field-id-tag { background: #3b6fd4; color: white; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 8px; letter-spacing: 0.3px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .field-id-tag.sub { background: #6b93e0; }
+  .field-content { flex: 1; }
+  .afield-label { font-size: 11px; color: #666; margin-bottom: 4px; }
+  .afield-label .opt { color: #aaa; font-weight: 400; }
+  .afield-label .req { color: #e05555; }
+
+  .afield-inner { border: 2px solid #1a9e8f; border-radius: 6px; background: #f9fefe; padding: 8px 12px; min-height: 34px; font-size: 11px; color: #bbb; }
+  .afield-inner.textarea { min-height: 60px; }
+  .afield-inner.disabled { border-color: #ccc; background: #f5f5f5; color: #aaa; }
+  .afield-inner.verified { display: flex; justify-content: space-between; align-items: center; }
+  .afield-inner.not-verified { display: flex; justify-content: space-between; align-items: center; }
+  .verified-badge { font-size: 10px; color: #1a9e8f; display: flex; align-items: center; gap: 3px; white-space: nowrap; }
+  .not-verified-badge { font-size: 10px; color: #aaa; display: flex; align-items: center; gap: 3px; white-space: nowrap; }
+  .send-code-btn { background: #1a9e8f; color: white; font-size: 9px; font-weight: 700; padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
+  .afield-inner.radio-group { background: #f9fefe; padding: 8px 12px; display: flex; flex-direction: column; gap: 6px; }
+  .radio-opt { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #555; }
+  .fake-radio { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #1a9e8f; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .fake-radio.selected::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #1a9e8f; }
+  .afield-inner.checkbox-style { display: flex; align-items: center; gap: 8px; }
+  .fake-checkbox { width: 13px; height: 13px; border: 2px solid #1a9e8f; border-radius: 3px; flex-shrink: 0; }
+  .fake-checkbox.checked { background: #1a9e8f; }
+  .afield-inner.dropdown-inner { display: flex; justify-content: space-between; align-items: center; color: #bbb; }
+  .afield-inner.warning { border-color: #f0a500; background: #fffbf0; font-size: 10px; color: #a07000; display: flex; justify-content: space-between; align-items: center; }
+  .warn-btn { background: #1a9e8f; color: white; font-size: 9px; padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .cb-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #555; padding: 5px 8px; border: 2px solid #1a9e8f; border-radius: 6px; background: #f9fefe; }
+
+  .map-placeholder { border: 2px solid #1a9e8f; border-radius: 6px; background: #f0f8f7; min-height: 100px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px; }
+  .map-placeholder .map-icon { font-size: 28px; }
+  .map-placeholder .map-note { font-size: 10px; color: #888; }
+
+  .plan-card { border: 2px solid #1a9e8f; border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; background: #f9fefe; }
+  .plan-left { display: flex; align-items: center; gap: 8px; }
+  .plan-name { font-size: 12px; font-weight: 700; color: #333; }
+  .plan-desc { font-size: 10px; color: #888; }
+  .plan-price { font-size: 13px; font-weight: 700; color: #333; }
+
+  .add-btn { border: 2px dashed #1a9e8f; border-radius: 6px; text-align: center; padding: 10px; font-size: 11px; color: #1a9e8f; background: #f9fefe; }
+
+  .verify-bar { background: #f5c842; text-align: center; padding: 10px; font-size: 11px; font-weight: 700; color: #7a5f00; border-radius: 6px; margin-top: 16px; }
+  .verify-note { text-align: center; font-size: 9px; color: #aaa; margin-top: 4px; }
+
+  .save-btn { background: #1a9e8f; color: white; font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 6px; display: inline-block; margin-top: 14px; }
+
+  .legend-panel { width: 260px; flex-shrink: 0; padding: 16px; overflow-y: auto; max-height: 700px; }
+  .legend-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #aaa; margin-bottom: 10px; }
+  .legend-sub { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #c5d0e8; margin: 10px 0 6px; }
+  .legend-row { display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f0f0f0; }
+  .legend-row:last-child { border-bottom: none; }
+  .legend-badge { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; background: #3b6fd4; color: white; }
+  .legend-badge.sub { background: #6b93e0; }
+  .legend-info .lbl { font-size: 11px; font-weight: 600; color: #333; line-height: 1.3; }
+  .legend-info .typ { font-size: 10px; color: #888; }
+  .legend-info .note { font-size: 10px; color: #e07b39; font-style: italic; }
+
+  /* New screen styles */
+  .tab-bar { display: flex; border-bottom: 2px solid #eee; margin-bottom: 12px; }
+  .tab { font-size: 11px; padding: 7px 14px; color: #888; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+  .tab.active { color: #1a9e8f; border-bottom-color: #1a9e8f; font-weight: 700; }
+
+  .partner-card { border: 1px solid #e8e8e8; border-radius: 8px; padding: 12px; display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .partner-logo { width: 60px; height: 40px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #aaa; flex-shrink: 0; }
+  .partner-info { flex: 1; }
+  .partner-name { font-size: 11px; font-weight: 700; color: #333; margin-bottom: 3px; }
+  .partner-desc { font-size: 10px; color: #888; line-height: 1.4; }
+  .partner-desc .read-more { color: #1a9e8f; }
+  .reveal-btn { background: #1a9e8f; color: white; font-size: 10px; font-weight: 700; padding: 7px 14px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
+
+  .empty-state { text-align: center; padding: 24px 20px; color: #aaa; }
+  .empty-icon { font-size: 28px; margin-bottom: 6px; }
+  .empty-title { font-size: 12px; font-weight: 600; color: #bbb; }
+  .empty-sub { font-size: 10px; color: #ccc; margin-top: 3px; }
+
+  .pill-bar { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .pill { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; border: 1px solid #ddd; color: #888; background: white; }
+  .pill.active { background: #1a9e8f; color: white; border-color: #1a9e8f; }
+
+  .msg-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+  .msg-pane { border: 1px solid #e8e8e8; border-radius: 6px; min-height: 90px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #ccc; padding: 14px; text-align: center; }
+  .msg-filter-bar { display: flex; gap: 14px; margin-bottom: 8px; }
+  .msg-filter { font-size: 10px; color: #888; padding-bottom: 2px; }
+  .msg-filter.active { color: #1a9e8f; font-weight: 700; border-bottom: 2px solid #1a9e8f; }
+  .new-support-btn { background: #1a9e8f; color: white; font-size: 10px; font-weight: 700; padding: 6px 12px; border-radius: 6px; display: inline-block; margin-bottom: 10px; }
+  .msg-search-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .msg-search { border: 1px solid #ddd; border-radius: 6px; padding: 5px 10px; font-size: 10px; color: #bbb; width: 160px; }
+
+  .filter-bar-header { background: #1a9e8f; color: white; font-size: 11px; font-weight: 700; padding: 10px 14px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center; }
+  .filter-body { border: 1px solid #ddd; border-top: none; border-radius: 0 0 6px 6px; padding: 14px; margin-bottom: 14px; }
+  .filter-section-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; border-top: 1px solid #eee; padding-top: 8px; margin: 10px 0 6px; }
+  .filter-input { border: 1px solid #ddd; border-radius: 4px; padding: 5px 8px; font-size: 10px; color: #bbb; width: 100%; }
+
+  .pro-card { border: 1px solid #e8e8e8; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+  .pro-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .pro-name { font-size: 12px; font-weight: 700; color: #333; }
+  .pro-location { font-size: 10px; color: #666; margin-bottom: 6px; }
+  .pro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 12px; }
+  .pro-row { font-size: 10px; color: #777; }
+  .pro-row span { color: #1a9e8f; font-weight: 600; }
+  .pro-btns { display: flex; gap: 6px; margin-top: 8px; }
+  .see-more-btn { border: 1px solid #1a9e8f; color: #1a9e8f; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 5px; }
+  .save-pro-btn { border: 1px solid #ddd; color: #888; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 5px; }
+  .status-unavail { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: #ffe8e8; color: #cc4444; display: inline-block; }
+
+  .credits-bar { background: #2a6e64; color: white; font-size: 10px; padding: 8px 14px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .buy-credits-btn { background: white; color: #1a9e8f; font-size: 9px; font-weight: 700; padding: 4px 10px; border-radius: 4px; }
+  .form-section { border: 1px solid #e8e8e8; border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+  .form-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 10px; }
+  .quota-box { background: #f5f5f5; border-radius: 6px; padding: 8px 12px; font-size: 10px; color: #666; margin-top: 8px; }
+  .post-btn { background: #1a9e8f; color: white; font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 6px; display: inline-block; }
+  .draft-btn { border: 1px solid #1a9e8f; color: #1a9e8f; font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 6px; display: inline-block; margin-right: 8px; }
+  .back-link { font-size: 10px; color: #1a9e8f; margin-bottom: 4px; }
+
+  @media(max-width:760px) {
+    .screen-body { flex-direction: column; }
+    .legend-panel { width: 100%; border-top: 1px solid #eee; max-height: none; }
+    .content { padding: 16px; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>OperatorsHub — CP Guide</h1>
+  <p>Annotated screen diagrams with Field IDs</p>
+</header>
+
+<nav id="top-nav" style="position:sticky;top:0;z-index:100;background:white;border-bottom:2px solid #e8e8e8;padding:0 40px;display:flex;gap:4px;overflow-x:auto;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+  <a href="#section-pe" style="text-decoration:none;white-space:nowrap;font-size:11px;font-weight:700;color:#555;padding:12px 14px;border-bottom:3px solid transparent;display:inline-block;">CP-PE Profile Edit</a>
+  <a href="#section-af" style="text-decoration:none;white-space:nowrap;font-size:11px;font-weight:700;color:#555;padding:12px 14px;border-bottom:3px solid transparent;display:inline-block;">CP-AF Affiliates</a>
+  <a href="#section-jb" style="text-decoration:none;white-space:nowrap;font-size:11px;font-weight:700;color:#555;padding:12px 14px;border-bottom:3px solid transparent;display:inline-block;">CP-JB Jobs</a>
+  <a href="#section-ms" style="text-decoration:none;white-space:nowrap;font-size:11px;font-weight:700;color:#555;padding:12px 14px;border-bottom:3px solid transparent;display:inline-block;">CP-MS Messages</a>
+  <a href="#section-mk" style="text-decoration:none;white-space:nowrap;font-size:11px;font-weight:700;color:#555;padding:12px 14px;border-bottom:3px solid transparent;display:inline-block;">CP-MK Marketplace</a>
+  <a href="#section-je" style="text-decoration:none;white-space:nowrap;font-size:11px;font-weight:700;color:#555;padding:12px 14px;border-bottom:3px solid transparent;display:inline-block;">CP-JE Job Entry</a>
+</nav>
+<style>
+  #top-nav a:hover { color: #1a9e8f; border-bottom-color: #1a9e8f; }
+  #top-nav { scrollbar-width: none; }
+  #top-nav::-webkit-scrollbar { display: none; }
+</style>
+
+<div class="content">
+
+  <!-- ═══════════════════════════════════════════
+       CP-PE — PROFILE EDIT (S1–S6, unchanged)
+  ════════════════════════════════════════════ -->
+  <div id="section-pe" class="section-title">CP-PE — Company Profile Edit View</div>
+
+  <!-- CP-PE-S1 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-PE-S1</span>
+      <span class="screen-name">Basic Information</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="mockup-breadcrumb">Aviation</div>
+            <div class="mockup-title">Profile</div>
+            <div class="section-bar">
+              <span class="section-bar-label">BASIC INFORMATION</span>
+              <div class="section-bar-icons"><span class="check-icon">✓</span><span class="chevron">∧</span></div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S1-F1</span>
+              <div class="field-content">
+                <div class="afield-label">Company Name <span class="req">*</span></div>
+                <div class="afield-inner">Borcelle</div>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="afield">
+                <span class="field-id-tag">CP-PE-S1-F2</span>
+                <div class="field-content">
+                  <div class="afield-label">First Name <span class="req">*</span></div>
+                  <div class="afield-inner">John</div>
+                </div>
+              </div>
+              <div class="afield">
+                <span class="field-id-tag">CP-PE-S1-F3</span>
+                <div class="field-content">
+                  <div class="afield-label">Last Name <span class="req">*</span></div>
+                  <div class="afield-inner">Doe</div>
+                </div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S1-F4</span>
+              <div class="field-content">
+                <div class="afield-label">Email Address <span class="req">*</span></div>
+                <div class="afield-inner not-verified">
+                  <span>Enter email address</span>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <span class="not-verified-badge">⏱ Not verified</span>
+                    <span class="send-code-btn">Send Code</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S1-F5</span>
+              <div class="field-content">
+                <div class="afield-label">Phone Number <span class="req">*</span></div>
+                <div class="afield-inner verified disabled">+1 (555) 555-5555 <span class="verified-badge">✓ Verified</span></div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag" style="visibility:hidden;width:1px;padding:0;"></span>
+              <div class="field-content">
+                <div class="afield-inner warning">⚠ Phone verified. Contact admin to update. <span class="warn-btn">Request Change</span></div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S1-F6</span>
+              <div class="field-content">
+                <div class="afield-label">Tax Identification Number (EIN) <span class="req">*</span></div>
+                <div class="afield-inner">XX-XXXXXXX</div>
+              </div>
+            </div>
+            <div class="three-col">
+              <div class="afield">
+                <span class="field-id-tag">CP-PE-S1-F7</span>
+                <div class="field-content">
+                  <div class="afield-label">Country</div>
+                  <div class="afield-inner dropdown-inner">Select Country <span style="color:#aaa;">▾</span></div>
+                </div>
+              </div>
+              <div class="afield">
+                <span class="field-id-tag">CP-PE-S1-F8</span>
+                <div class="field-content">
+                  <div class="afield-label">State</div>
+                  <div class="afield-inner dropdown-inner disabled">Select a country first <span style="color:#aaa;">▾</span></div>
+                </div>
+              </div>
+              <div class="afield">
+                <span class="field-id-tag">CP-PE-S1-F9</span>
+                <div class="field-content">
+                  <div class="afield-label">City</div>
+                  <div class="afield-inner dropdown-inner disabled">Select a country first <span style="color:#aaa;">▾</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="sub-label">Change Password</div>
+            <div class="afield">
+              <span class="field-id-tag sub">CP-PE-S1-F10</span>
+              <div class="field-content">
+                <div class="afield-label">Current Password</div>
+                <div class="afield-inner" style="display:flex;justify-content:space-between;"><span style="color:#ccc;letter-spacing:3px;">••••••••••</span><span style="color:#aaa;">👁</span></div>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="afield">
+                <span class="field-id-tag sub">CP-PE-S1-F11</span>
+                <div class="field-content">
+                  <div class="afield-label">New Password</div>
+                  <div class="afield-inner" style="display:flex;justify-content:space-between;"><span style="color:#ccc;letter-spacing:3px;">•••</span><span style="color:#aaa;">👁</span></div>
+                </div>
+              </div>
+              <div class="afield">
+                <span class="field-id-tag sub">CP-PE-S1-F12</span>
+                <div class="field-content">
+                  <div class="afield-label">Repeat New Password</div>
+                  <div class="afield-inner" style="display:flex;justify-content:space-between;"><span style="color:#ccc;letter-spacing:3px;">•••</span><span style="color:#aaa;">👁</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="save-btn">SAVE</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S1-F1</span><div class="legend-info"><div class="lbl">Company Name</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S1-F2</span><div class="legend-info"><div class="lbl">First Name</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S1-F3</span><div class="legend-info"><div class="lbl">Last Name</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S1-F4</span><div class="legend-info"><div class="lbl">Email Address</div><div class="typ">Email input</div><div class="note">Send Code to verify</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S1-F5</span><div class="legend-info"><div class="lbl">Phone Number</div><div class="typ">Phone input</div><div class="note">Locked — Request Change to update</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S1-F6</span><div class="legend-info"><div class="lbl">Tax ID (EIN)</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S1-F7</span><div class="legend-info"><div class="lbl">Country</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S1-F8</span><div class="legend-info"><div class="lbl">State</div><div class="typ">Dropdown</div><div class="note">Unlocks after country selected</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S1-F9</span><div class="legend-info"><div class="lbl">City</div><div class="typ">Dropdown</div><div class="note">Unlocks after state selected</div></div></div>
+        <div class="legend-sub">Change Password</div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S1-F10</span><div class="legend-info"><div class="lbl">Current Password</div><div class="typ">Password input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S1-F11</span><div class="legend-info"><div class="lbl">New Password</div><div class="typ">Password input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S1-F12</span><div class="legend-info"><div class="lbl">Repeat New Password</div><div class="typ">Password input</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-PE-S2 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-PE-S2</span>
+      <span class="screen-name">General Information</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="section-bar">
+              <span class="section-bar-label">GENERAL INFORMATION</span>
+              <div class="section-bar-icons"><span class="check-icon">✓</span><span class="chevron">∧</span></div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S2-F1</span>
+              <div class="field-content">
+                <div class="afield-label">Link to company website <span class="opt">(optional)</span></div>
+                <div class="afield-inner">Website</div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S2-F2</span>
+              <div class="field-content">
+                <div class="afield-label">Description of company <span class="opt">(optional)</span></div>
+                <div class="afield-inner textarea">Describe your company, services, and experience...</div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S2-F3</span>
+              <div class="field-content">
+                <div class="afield-label">Are you hiring? <span class="req">*</span></div>
+                <div class="afield-inner radio-group">
+                  <div class="radio-opt"><div class="fake-radio selected"></div> Yes <span style="font-size:9px;color:#3b6fd4;margin-left:4px;">← CP-PE-S2-F3a</span></div>
+                  <div class="radio-opt"><div class="fake-radio"></div> No <span style="font-size:9px;color:#3b6fd4;margin-left:4px;">← CP-PE-S2-F3b</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S2-F4</span>
+              <div class="field-content">
+                <div class="afield-label">What sectors do you operate in? <span class="opt">(Select all that apply)</span></div>
+                <div class="afield-inner dropdown-inner">Select sectors... <span style="color:#aaa;">▾</span></div>
+              </div>
+            </div>
+            <div class="save-btn">SAVE</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S2-F1</span><div class="legend-info"><div class="lbl">Link to company website</div><div class="typ">Text input</div><div class="note">Optional</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S2-F2</span><div class="legend-info"><div class="lbl">Description of company</div><div class="typ">Textarea</div><div class="note">Optional</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S2-F3</span><div class="legend-info"><div class="lbl">Are you hiring?</div><div class="typ">Radio group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S2-F3a</span><div class="legend-info"><div class="lbl">Yes</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S2-F3b</span><div class="legend-info"><div class="lbl">No</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S2-F4</span><div class="legend-info"><div class="lbl">Sectors you operate in</div><div class="typ">Multi-select dropdown</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-PE-S3 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-PE-S3</span>
+      <span class="screen-name">Aircraft</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="section-bar">
+              <span class="section-bar-label">AIRCRAFT</span>
+              <div class="section-bar-icons"><span class="check-icon">✓</span><span class="chevron">∧</span></div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S3-F1</span>
+              <div class="field-content">
+                <div class="afield-label">Aircraft Operations</div>
+                <div class="afield-inner radio-group">
+                  <div class="radio-opt"><div class="fake-radio selected"></div> We own/operate aircraft <span style="font-size:9px;color:#3b6fd4;margin-left:4px;">← CP-PE-S3-F1a</span></div>
+                  <div class="radio-opt"><div class="fake-radio"></div> Not applicable - We do not own/operate aircraft <span style="font-size:9px;color:#3b6fd4;margin-left:4px;">← CP-PE-S3-F1b</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="sub-label">Aircraft #1</div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S3-F2</span>
+              <div class="field-content">
+                <div class="afield-label">What Type of Airframe(s) do you own and operate? <span class="req">*</span></div>
+                <div class="afield-inner dropdown-inner">Select aircraft type <span style="color:#aaa;">▾</span></div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S3-F3</span>
+              <div class="field-content">
+                <div class="afield-label">Which fixed wing aircraft do you own?</div>
+                <div class="afield-inner dropdown-inner">Select type <span style="color:#aaa;">▾</span></div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S3-F4</span>
+              <div class="field-content">
+                <div class="afield-label">If your airframe isn't listed, please type it in here</div>
+                <div class="afield-inner">Enter airframe name</div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S3-F5</span>
+              <div class="field-content">
+                <div class="afield-label">How many <span class="req">*</span></div>
+                <div class="afield-inner">1</div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S3-F6</span>
+              <div class="field-content">
+                <div class="afield-label">What airport is your aircraft based out of? <span class="opt">(airport code, optional)</span></div>
+                <div class="afield-inner">Enter Airport Code</div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S3-F7</span>
+              <div class="field-content">
+                <div class="afield-label">Are you looking to sub contract out your aircraft or services? <span class="req">*</span></div>
+                <div class="afield-inner dropdown-inner">No <span style="color:#aaa;">▾</span></div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S3-F8</span>
+              <div class="field-content">
+                <div class="afield-label">Are you currently hiring? <span class="req">*</span></div>
+                <div class="afield-inner dropdown-inner">No <span style="color:#aaa;">▾</span></div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S3-F9</span>
+              <div class="field-content">
+                <div class="add-btn">+ Add Another Aircraft</div>
+              </div>
+            </div>
+            <div class="save-btn">Save</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S3-F1</span><div class="legend-info"><div class="lbl">Aircraft Operations</div><div class="typ">Radio group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S3-F1a</span><div class="legend-info"><div class="lbl">We own/operate aircraft</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S3-F1b</span><div class="legend-info"><div class="lbl">Not applicable</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S3-F2</span><div class="legend-info"><div class="lbl">Airframe type</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S3-F3</span><div class="legend-info"><div class="lbl">Fixed wing aircraft</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S3-F4</span><div class="legend-info"><div class="lbl">Custom airframe (if not listed)</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S3-F5</span><div class="legend-info"><div class="lbl">How many</div><div class="typ">Number input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S3-F6</span><div class="legend-info"><div class="lbl">Airport code</div><div class="typ">Text input</div><div class="note">Optional</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S3-F7</span><div class="legend-info"><div class="lbl">Sub contract out aircraft?</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S3-F8</span><div class="legend-info"><div class="lbl">Currently hiring?</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S3-F9</span><div class="legend-info"><div class="lbl">Add Another Aircraft</div><div class="typ">Button / Repeatable</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-PE-S4 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-PE-S4</span>
+      <span class="screen-name">Maintenance Shop</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="section-bar">
+              <span class="section-bar-label">MAINTENANCE SHOP</span>
+              <div class="section-bar-icons"><span class="check-icon">✓</span><span class="chevron">∧</span></div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S4-F1</span>
+              <div class="field-content">
+                <div class="afield-label">Maintenance Services</div>
+                <div class="afield-inner radio-group">
+                  <div class="radio-opt"><div class="fake-radio selected"></div> We provide maintenance services <span style="font-size:9px;color:#3b6fd4;margin-left:4px;">← CP-PE-S4-F1a</span></div>
+                  <div class="radio-opt"><div class="fake-radio"></div> Not applicable - We do not provide maintenance services <span style="font-size:9px;color:#3b6fd4;margin-left:4px;">← CP-PE-S4-F1b</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S4-F2</span>
+              <div class="field-content">
+                <div class="afield-label">What type of work does your maintenance shop complete? <span class="req">*</span></div>
+                <div class="afield-inner dropdown-inner">Select maintenance type <span style="color:#aaa;">▾</span></div>
+              </div>
+            </div>
+            <div class="save-btn">SAVE</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S4-F1</span><div class="legend-info"><div class="lbl">Maintenance Services</div><div class="typ">Radio group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S4-F1a</span><div class="legend-info"><div class="lbl">We provide maintenance services</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S4-F1b</span><div class="legend-info"><div class="lbl">Not applicable</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S4-F2</span><div class="legend-info"><div class="lbl">Type of maintenance work</div><div class="typ">Multi-select dropdown</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-PE-S5 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-PE-S5</span>
+      <span class="screen-name">Work Preferences</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="section-bar">
+              <span class="section-bar-label">WORK PREFERENCES</span>
+              <div class="section-bar-icons"><span class="check-icon">✓</span><span class="chevron">∧</span></div>
+            </div>
+            <div class="afield-label" style="margin-bottom:8px;">What kind of work are you looking to hire for? <span class="opt">(Select all that apply)</span></div>
+            <div class="checkbox-grid" style="margin-bottom:14px;">
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F1</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox checked"></div> Full Time</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F2</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Part Time</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F3</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Seasonal</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F4</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Contract</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F5</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> On-Call</div></div></div>
+            </div>
+            <div class="afield-label" style="margin-bottom:8px;">What regions do you operate in? <span class="opt">(Select all that apply)</span></div>
+            <div class="checkbox-grid" style="margin-bottom:14px;">
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F6</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Northern Region</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F11</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Rocky Mountain</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F7</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Southwestern Region</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F12</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Intermountain Region</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F8</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Pacific Southwest</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F13</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Pacific Northwest</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F9</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Southern Region</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F14</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Eastern Region</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F10</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> Alaska Region</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-PE-S5-F15</span><div class="field-content"><div class="cb-item"><div class="fake-checkbox"></div> International</div></div></div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S5-F16</span>
+              <div class="field-content">
+                <div class="afield-label">Region Map</div>
+                <div class="map-placeholder">
+                  <div class="map-icon">🗺️</div>
+                  <div class="map-note">Interactive map — click states to select/deselect regions</div>
+                </div>
+              </div>
+            </div>
+            <div class="afield" style="margin-top:10px;">
+              <span class="field-id-tag">CP-PE-S5-F17</span>
+              <div class="field-content">
+                <div class="afield-label">For Hire</div>
+                <div class="afield-inner checkbox-style"><div class="fake-checkbox"></div><span style="font-size:10px;">Check this box if you need to fill a position immediately. Job postings will be tagged as urgent.</span></div>
+              </div>
+            </div>
+            <div class="save-btn">SAVE</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-sub">Work Type</div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F1</span><div class="legend-info"><div class="lbl">Full Time</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F2</span><div class="legend-info"><div class="lbl">Part Time</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F3</span><div class="legend-info"><div class="lbl">Seasonal</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F4</span><div class="legend-info"><div class="lbl">Contract</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F5</span><div class="legend-info"><div class="lbl">On-Call</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-sub">Regions</div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F6</span><div class="legend-info"><div class="lbl">Northern Region</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F7</span><div class="legend-info"><div class="lbl">Southwestern Region</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F8</span><div class="legend-info"><div class="lbl">Pacific Southwest Region</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F9</span><div class="legend-info"><div class="lbl">Southern Region</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F10</span><div class="legend-info"><div class="lbl">Alaska Region</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F11</span><div class="legend-info"><div class="lbl">Rocky Mountain Region</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F12</span><div class="legend-info"><div class="lbl">Intermountain Region</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F13</span><div class="legend-info"><div class="lbl">Pacific Northwest Region</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F14</span><div class="legend-info"><div class="lbl">Eastern Region</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F15</span><div class="legend-info"><div class="lbl">International</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F16</span><div class="legend-info"><div class="lbl">Region Map</div><div class="typ">Interactive map</div><div class="note">Highlights states on selection</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S5-F17</span><div class="legend-info"><div class="lbl">For Hire</div><div class="typ">Checkbox</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-PE-S6 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-PE-S6</span>
+      <span class="screen-name">Billing and Payment Preferences</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="section-bar">
+              <span class="section-bar-label">BILLING AND PAYMENT PREFERENCES</span>
+              <div class="section-bar-icons"><span class="check-icon">✓</span><span class="chevron">∧</span></div>
+            </div>
+            <div class="afield">
+              <span class="field-id-tag">CP-PE-S6-F1</span>
+              <div class="field-content">
+                <div class="afield-label">Change Plan</div>
+                <div class="plan-card">
+                  <div class="plan-left">
+                    <div class="fake-radio selected"></div>
+                    <div>
+                      <div class="plan-name">FREE <span style="font-size:9px;color:#3b6fd4;">← CP-PE-S6-F1a</span></div>
+                      <div class="plan-desc">Free plan for companies with basic features</div>
+                    </div>
+                  </div>
+                  <div class="plan-price">FREE</div>
+                </div>
+              </div>
+            </div>
+            <div class="verify-bar">VERIFICATION PENDING</div>
+            <div class="verify-note">Verification can take between 1-3 Days, thank you for your patience.</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-PE-S6-F1</span><div class="legend-info"><div class="lbl">Select Plan</div><div class="typ">Radio group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-PE-S6-F1a</span><div class="legend-info"><div class="lbl">FREE</div><div class="typ">Radio option</div><div class="note">Only plan available for CP</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CP-AF — AFFILIATES
+  ════════════════════════════════════════════ -->
+  <div id="section-af" class="section-title">CP-AF — Affiliates</div>
+
+  <!-- CP-AF-S1 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-AF-S1</span>
+      <span class="screen-name">Partner Offers</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="mockup-breadcrumb">Aviation</div>
+            <div class="mockup-title">Partner Offers</div>
+            <div style="font-size:10px;color:#888;margin-bottom:14px;">Exclusive discounts and offers from our partners</div>
+            <div class="afield">
+              <span class="field-id-tag">CP-AF-S1-F1</span>
+              <div class="field-content">
+                <div class="afield-label">Partner Card List <span class="opt">(read-only, system-generated)</span></div>
+                <div class="partner-card">
+                  <div class="partner-logo">LOGO</div>
+                  <div class="partner-info">
+                    <div class="partner-name">FLYING EYES OPTICS (10% OFF)</div>
+                    <div class="partner-desc">High-performance eyewear for pilots and tactical users... <span class="read-more">... read more</span></div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                    <span class="field-id-tag sub">CP-AF-S1-F1a</span>
+                    <div class="reveal-btn">Reveal Code</div>
+                  </div>
+                </div>
+                <div class="partner-card">
+                  <div class="partner-logo">LOGO</div>
+                  <div class="partner-info">
+                    <div class="partner-name">ARMADILLO WOOLERY (20% OFF)</div>
+                    <div class="partner-desc">PFAS-free Merino wool clothing and fire station wear... <span class="read-more">... read more</span></div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                    <span class="field-id-tag sub">CP-AF-S1-F1a</span>
+                    <div class="reveal-btn">Reveal Code</div>
+                  </div>
+                </div>
+                <div class="partner-card">
+                  <div class="partner-logo">LOGO</div>
+                  <div class="partner-info">
+                    <div class="partner-name">FRONTLINE OPTICS (15% OFF)</div>
+                    <div class="partner-desc">Affordable, durable sunglasses for frontline workers... <span class="read-more">... read more</span></div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                    <span class="field-id-tag sub">CP-AF-S1-F1a</span>
+                    <div class="reveal-btn">Reveal Code</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-AF-S1-F1</span><div class="legend-info"><div class="lbl">Partner Card List</div><div class="typ">Read-only list</div><div class="note">System-generated; one card per partner</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-AF-S1-F1a</span><div class="legend-info"><div class="lbl">Reveal Code Button</div><div class="typ">Action button</div><div class="note">Repeats per card; reveals partner discount code</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-MK-S2: Professional Detail Panel (opened via CP-MK-S1-F29a) -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-MK-S2</span>
+      <span class="screen-name">Marketplace — Professional Detail Panel</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner" style="padding:0;display:flex;min-height:600px;">
+
+            <!-- Left: detail content -->
+            <div style="flex:1;padding:18px 20px;overflow-y:auto;border-right:1px solid #eee;">
+              <!-- Action buttons -->
+              <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px;">
+                <div class="afield" style="margin-bottom:0;">
+                  <span class="field-id-tag">CP-MK-S2-F1</span>
+                  <div class="field-content"><div class="see-more-btn" style="padding:5px 14px;">🔖 SAVE</div></div>
+                </div>
+                <div class="afield" style="margin-bottom:0;">
+                  <span class="field-id-tag">CP-MK-S2-F2</span>
+                  <div class="field-content"><div class="reveal-btn" style="padding:5px 14px;">INVITE</div></div>
+                </div>
+              </div>
+
+              <!-- Summary fields -->
+              <div style="border-bottom:1px solid #eee;padding-bottom:10px;margin-bottom:10px;">
+                <div class="afield" style="margin-bottom:6px;">
+                  <span class="field-id-tag">CP-MK-S2-F3</span>
+                  <div class="field-content">
+                    <div style="display:grid;grid-template-columns:120px 1fr;gap:4px 10px;font-size:11px;">
+                      <span style="color:#888;">Location</span><span style="color:#333;">Alexandria, Louisiana, United States</span>
+                      <span style="color:#888;">Desired Payrate</span><span style="color:#333;">$12.00/day</span>
+                      <span style="color:#888;">Sector/Industry</span><span style="color:#333;">Aviation</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- About -->
+              <div class="afield">
+                <span class="field-id-tag">CP-MK-S2-F4</span>
+                <div class="field-content">
+                  <div class="sub-label" style="margin-top:0;">About</div>
+                  <div style="font-size:10px;color:#888;line-height:1.5;">sdas dasd asda sasd asdasd asdasd</div>
+                </div>
+              </div>
+
+              <!-- Availability Details -->
+              <div class="afield">
+                <span class="field-id-tag">CP-MK-S2-F5</span>
+                <div class="field-content">
+                  <div class="sub-label">Availability Details</div>
+                  <div style="border:1px solid #eee;border-radius:6px;padding:10px;font-size:10px;color:#888;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                      <span style="color:#aaa;font-style:italic;">Not Available at this time</span>
+                      <span>From <strong style="color:#333;">Dec 10, 2025</strong> to <strong style="color:#333;">Dec 26, 2025</strong></span>
+                    </div>
+                    <div style="margin-bottom:4px;"><strong style="color:#555;">Seasonal Availability</strong> &nbsp; Fall (September – November), Winter (December – February)</div>
+                    <div><strong style="color:#555;">NOTES:</strong> sad asdsa sddas asds sdaas as dasd asdawsd asdas dasdas d</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Certifications & Experience -->
+              <div class="afield">
+                <span class="field-id-tag">CP-MK-S2-F6</span>
+                <div class="field-content">
+                  <div class="sub-label">Certifications and Experience</div>
+                  <div style="background:#6b8f8b;border-radius:8px;padding:14px;color:white;">
+                    <div style="font-size:9px;opacity:0.8;margin-bottom:2px;">Fixed Wing</div>
+                    <div style="font-size:13px;font-weight:700;margin-bottom:10px;">General Laborer</div>
+
+                    <div style="font-size:10px;font-weight:700;margin-bottom:6px;">Certifications and Endorsements</div>
+                    <div style="background:rgba(255,255,255,0.15);border-radius:4px;padding:4px 10px;font-size:10px;display:inline-block;margin-bottom:10px;">Private</div>
+
+                    <div style="font-size:10px;font-weight:700;margin-bottom:8px;">Flight Times</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:9px;margin-bottom:6px;">
+                      <div><div style="opacity:0.7;">Total times</div><div style="font-weight:700;">123</div></div>
+                      <div><div style="opacity:0.7;">PIC times</div><div style="font-weight:700;">123</div></div>
+                      <div><div style="opacity:0.7;">Instrument time</div><div style="font-weight:700;">123</div></div>
+                      <div><div style="opacity:0.7;">Cross country</div><div style="font-weight:700;">123</div></div>
+                      <div><div style="opacity:0.7;">Night time</div><div style="font-weight:700;">123</div></div>
+                      <div><div style="opacity:0.7;">Turbine Time</div><div style="font-weight:700;">123</div></div>
+                      <div><div style="opacity:0.7;">Multi-Engine Time</div><div style="font-weight:700;">—</div></div>
+                    </div>
+                    <div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:8px;font-size:10px;">
+                      <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>Safety School</span><span>—</span></div>
+                      <div style="display:flex;justify-content:space-between;"><span>Sector Experience</span><span>—</span></div>
+                    </div>
+                  </div>
+                  <!-- Medical accordion -->
+                  <div style="border:1px solid #eee;border-radius:6px;margin-top:6px;padding:8px 12px;display:flex;justify-content:space-between;font-size:11px;color:#555;">
+                    <span>THIRD CLASS</span><span style="color:#aaa;">—</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Type of Work Sought -->
+              <div class="afield">
+                <span class="field-id-tag">CP-MK-S2-F7</span>
+                <div class="field-content">
+                  <div class="sub-label">Type of Work Sought</div>
+                  <div style="font-size:11px;color:#555;display:flex;align-items:center;gap:6px;">
+                    <span style="width:8px;height:8px;border-radius:50%;background:#1a9e8f;display:inline-block;"></span> Seasonal
+                  </div>
+                </div>
+              </div>
+
+              <!-- Operating Regions -->
+              <div class="afield">
+                <span class="field-id-tag">CP-MK-S2-F8</span>
+                <div class="field-content">
+                  <div class="sub-label">Operating Regions</div>
+                  <div style="display:flex;gap:20px;font-size:10px;color:#555;margin-bottom:8px;">
+                    <div style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#f5a0a0;display:inline-block;"></span>Southwestern Region</div>
+                    <div style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#a8d8b0;display:inline-block;"></span>Southern Region</div>
+                  </div>
+                  <div class="map-placeholder" style="min-height:120px;">
+                    <div class="map-icon">🗺️</div>
+                    <div class="map-note">Highlighted regions map — read-only</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: profile sidebar -->
+            <div style="width:180px;flex-shrink:0;background:#1a9e8f;padding:16px;color:white;position:relative;">
+              <div style="text-align:right;font-size:16px;margin-bottom:12px;">✕</div>
+              <div style="width:70px;height:70px;border-radius:50%;background:#2a7e74;border:3px solid white;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,0.6);">PHOTO</div>
+              <div style="font-size:13px;font-weight:700;margin-bottom:2px;">Sdasdasd Asd As A. <span style="font-size:11px;">✓</span></div>
+              <div style="font-size:9px;opacity:0.8;margin-bottom:12px;">Alexandria, Louisiana, United States</div>
+              <div style="font-size:10px;border-top:1px solid rgba(255,255,255,0.2);padding-top:10px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="opacity:0.7;">Industry</span><span style="font-weight:700;">Aviation</span></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="opacity:0.7;">Profession</span><span style="font-weight:700;font-size:9px;">Fixed Wing Pilot</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;"><span style="opacity:0.7;">Status</span><span style="background:#ffe8e8;color:#cc4444;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;">Not Available</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S2-F1</span><div class="legend-info"><div class="lbl">Save Button</div><div class="typ">Action button</div><div class="note">Saves to Saved Talent tab (CP-JB-S1-F1b)</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S2-F2</span><div class="legend-info"><div class="lbl">Invite Button</div><div class="typ">Action button</div><div class="note">Sends job invite to this professional</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S2-F3</span><div class="legend-info"><div class="lbl">Summary Info</div><div class="typ">Read-only fields</div><div class="note">Location, Desired Payrate, Sector/Industry</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S2-F4</span><div class="legend-info"><div class="lbl">About</div><div class="typ">Read-only text</div><div class="note">Professional's self-description</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S2-F5</span><div class="legend-info"><div class="lbl">Availability Details</div><div class="typ">Read-only panel</div><div class="note">Status, date range, seasonal availability, notes</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S2-F6</span><div class="legend-info"><div class="lbl">Certifications & Experience</div><div class="typ">Read-only card</div><div class="note">Airframe type, role, certs, flight times, safety school, sector exp, medical</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S2-F7</span><div class="legend-info"><div class="lbl">Type of Work Sought</div><div class="typ">Read-only list</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S2-F8</span><div class="legend-info"><div class="lbl">Operating Regions</div><div class="typ">Read-only map + legend</div><div class="note">Highlighted regions match professional's selections</div></div></div>
+        <div class="legend-sub">Profile Sidebar (right panel)</div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S2-F9</span><div class="legend-info"><div class="lbl">Profile Photo</div><div class="typ">Read-only image</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S2-F10</span><div class="legend-info"><div class="lbl">Name + Verified Badge</div><div class="typ">Read-only</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S2-F11</span><div class="legend-info"><div class="lbl">Industry / Profession / Status</div><div class="typ">Read-only summary</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CP-JB — JOBS MANAGEMENT
+  ════════════════════════════════════════════ -->
+  <div id="section-jb" class="section-title">CP-JB — Jobs Management</div>
+
+  <!-- CP-JB-S1 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-JB-S1</span>
+      <span class="screen-name">Jobs Management</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="mockup-breadcrumb">Aviation</div>
+            <div class="mockup-title">Management</div>
+            <div class="afield">
+              <span class="field-id-tag">CP-JB-S1-F1</span>
+              <div class="field-content">
+                <div class="afield-label">Tab Navigation</div>
+                <div class="tab-bar">
+                  <div class="tab active">Posted Jobs <span style="font-size:9px;color:#3b6fd4;">← F1a</span></div>
+                  <div class="tab">Saved Talent <span style="font-size:9px;color:#3b6fd4;">← F1b</span></div>
+                  <div class="tab">Invites Sent <span style="font-size:9px;color:#3b6fd4;">← F1c</span></div>
+                  <div class="tab">Jobs Archive <span style="font-size:9px;color:#3b6fd4;">← F1d</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="sub-label">Posted Jobs Tab (CP-JB-S1-F1a)</div>
+            <div class="empty-state"><div class="empty-icon">💼</div><div class="empty-title">No jobs posted yet</div><div class="empty-sub">Create your first job to start hiring.</div></div>
+            <div class="sub-label">Saved Talent Tab (CP-JB-S1-F1b)</div>
+            <div class="empty-state"><div class="empty-icon">👤</div><div class="empty-title">No saved professionals</div><div class="empty-sub">Save talented operators from the marketplace.</div></div>
+            <div class="sub-label">Invites Sent Tab (CP-JB-S1-F1c)</div>
+            <div class="afield">
+              <span class="field-id-tag">CP-JB-S1-F2</span>
+              <div class="field-content">
+                <div class="afield-label">Invite Status Filter</div>
+                <div class="pill-bar">
+                  <div class="pill active">ALL <span style="font-size:9px;margin-left:2px;">← F2a</span></div>
+                  <div class="pill">PENDING (0) <span style="font-size:9px;color:#3b6fd4;margin-left:2px;">← F2b</span></div>
+                  <div class="pill">ACCEPTED (0) <span style="font-size:9px;color:#3b6fd4;margin-left:2px;">← F2c</span></div>
+                  <div class="pill">DECLINED (0) <span style="font-size:9px;color:#3b6fd4;margin-left:2px;">← F2d</span></div>
+                  <div class="pill">EXPIRED (0) <span style="font-size:9px;color:#3b6fd4;margin-left:2px;">← F2e</span></div>
+                </div>
+                <div class="empty-state"><div class="empty-icon" style="color:#1a9e8f;font-size:22px;">✓</div><div class="empty-title">No invites sent yet</div><div class="empty-sub">Invite operators to your jobs from the marketplace.</div></div>
+              </div>
+            </div>
+            <div class="sub-label">Jobs Archive Tab (CP-JB-S1-F1d)</div>
+            <div class="empty-state"><div class="empty-icon">📄</div><div class="empty-title">No archived jobs</div><div class="empty-sub">Closed jobs and drafts will appear here.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-JB-S1-F1</span><div class="legend-info"><div class="lbl">Tab Navigation</div><div class="typ">Tab group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JB-S1-F1a</span><div class="legend-info"><div class="lbl">Posted Jobs</div><div class="typ">Tab</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JB-S1-F1b</span><div class="legend-info"><div class="lbl">Saved Talent</div><div class="typ">Tab</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JB-S1-F1c</span><div class="legend-info"><div class="lbl">Invites Sent</div><div class="typ">Tab</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JB-S1-F1d</span><div class="legend-info"><div class="lbl">Jobs Archive</div><div class="typ">Tab</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JB-S1-F2</span><div class="legend-info"><div class="lbl">Invite Status Filter</div><div class="typ">Pill filter group</div><div class="note">Visible on Invites Sent tab only</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JB-S1-F2a</span><div class="legend-info"><div class="lbl">All</div><div class="typ">Filter pill</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JB-S1-F2b</span><div class="legend-info"><div class="lbl">Pending</div><div class="typ">Filter pill</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JB-S1-F2c</span><div class="legend-info"><div class="lbl">Accepted</div><div class="typ">Filter pill</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JB-S1-F2d</span><div class="legend-info"><div class="lbl">Declined</div><div class="typ">Filter pill</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JB-S1-F2e</span><div class="legend-info"><div class="lbl">Expired</div><div class="typ">Filter pill</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CP-MS — MESSAGES
+  ════════════════════════════════════════════ -->
+  <div id="section-ms" class="section-title">CP-MS — Messages</div>
+
+  <!-- CP-MS-S1 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-MS-S1</span>
+      <span class="screen-name">Messages</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="mockup-breadcrumb">Aviation</div>
+            <div class="mockup-title">Messages</div>
+            <div class="afield">
+              <span class="field-id-tag">CP-MS-S1-F1</span>
+              <div class="field-content">
+                <div class="afield-label">Message Type Tabs</div>
+                <div class="tab-bar">
+                  <div class="tab active">All (0) <span style="font-size:9px;color:#3b6fd4;">← F1a</span></div>
+                  <div class="tab">Support (0) <span style="font-size:9px;color:#3b6fd4;">← F1b</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="msg-search-wrap">
+              <div class="afield" style="margin-bottom:0;">
+                <span class="field-id-tag">CP-MS-S1-F2</span>
+                <div class="field-content">
+                  <div class="afield-label">Read Status Filter</div>
+                  <div class="msg-filter-bar">
+                    <div class="msg-filter active">All <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F2a</span></div>
+                    <div class="msg-filter">Unread <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F2b</span></div>
+                    <div class="msg-filter">Read <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F2c</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="afield" style="margin-bottom:0;">
+                <span class="field-id-tag">CP-MS-S1-F3</span>
+                <div class="field-content">
+                  <div class="afield-label">Search</div>
+                  <div class="msg-search">Search...</div>
+                </div>
+              </div>
+            </div>
+            <div class="msg-layout">
+              <div class="msg-pane">No message conversations yet. Conversations will appear here when a company accepts your job application.</div>
+              <div class="msg-pane">Select a conversation to start chatting</div>
+            </div>
+            <div class="sub-label" style="margin-top:16px;">Support Tab (CP-MS-S1-F1b) — additional element</div>
+            <div class="afield">
+              <span class="field-id-tag">CP-MS-S1-F4</span>
+              <div class="field-content">
+                <div class="afield-label">New Support Request Button</div>
+                <div class="new-support-btn">+ New Support Request</div>
+                <div style="font-size:9px;color:#aaa;margin-top:4px;">No support conversations yet. Click "New Support Request" to start one.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-MS-S1-F1</span><div class="legend-info"><div class="lbl">Message Type Tabs</div><div class="typ">Tab group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MS-S1-F1a</span><div class="legend-info"><div class="lbl">All Messages</div><div class="typ">Tab</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MS-S1-F1b</span><div class="legend-info"><div class="lbl">Support</div><div class="typ">Tab</div><div class="note">Shows New Support Request button when active</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MS-S1-F2</span><div class="legend-info"><div class="lbl">Read Status Filter</div><div class="typ">Inline filter</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MS-S1-F2a</span><div class="legend-info"><div class="lbl">All</div><div class="typ">Filter option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MS-S1-F2b</span><div class="legend-info"><div class="lbl">Unread</div><div class="typ">Filter option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MS-S1-F2c</span><div class="legend-info"><div class="lbl">Read</div><div class="typ">Filter option</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MS-S1-F3</span><div class="legend-info"><div class="lbl">Search Messages</div><div class="typ">Text search input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MS-S1-F4</span><div class="legend-info"><div class="lbl">New Support Request</div><div class="typ">Action button</div><div class="note">Support tab only</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CP-MK — MARKETPLACE
+  ════════════════════════════════════════════ -->
+  <div id="section-mk" class="section-title">CP-MK — Marketplace</div>
+  <!-- CP-MK-S1 note: CP-MK-S2 (detail panel) follows immediately after CP-MK-S1 -->
+
+  <!-- CP-MK-S1 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-MK-S1</span>
+      <span class="screen-name">Marketplace</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="mockup-breadcrumb">Aviation</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div class="mockup-title" style="margin-bottom:0;">Marketplace</div>
+              <div class="afield" style="margin-bottom:0;">
+                <span class="field-id-tag">CP-MK-S1-F1</span>
+                <div class="field-content"><div class="reveal-btn" style="font-size:10px;">✦ CREATE</div></div>
+              </div>
+            </div>
+
+            <!-- Shared: filter header -->
+            <div class="filter-bar-header">
+              <span>⚙ SEARCH FILTER</span>
+              <span class="field-id-tag" style="background:rgba(255,255,255,0.25);">CP-MK-S1-F2</span>
+            </div>
+            <div class="filter-body">
+
+              <!-- Professional type selector — shared across all states -->
+              <div style="background:#f0f0f0;border-radius:6px;padding:10px 12px;margin-bottom:12px;">
+                <div class="afield-label" style="margin-bottom:8px;font-size:10px;font-weight:700;color:#555;">WHAT TYPE OF SKILLED PROFESSIONAL ARE YOU SEARCHING FOR?</div>
+                <div class="afield" style="margin-bottom:0;">
+                  <span class="field-id-tag">CP-MK-S1-F3</span>
+                  <div class="field-content">
+                    <div style="display:flex;gap:20px;font-size:11px;color:#555;align-items:center;">
+                      <div class="radio-opt"><div class="fake-radio selected"></div> Pilot <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F3a</span></div>
+                      <div class="radio-opt"><div class="fake-radio"></div> Mechanic <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F3b</span></div>
+                      <div class="radio-opt"><div class="fake-radio"></div> General <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F3c</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── STATE A: Pilot selected (F3a) ── -->
+              <div style="border:2px solid #3b6fd4;border-radius:8px;padding:12px;margin-bottom:14px;">
+                <div style="font-size:9px;font-weight:700;color:#3b6fd4;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Filter State A — Pilot (F3a active)</div>
+
+                <div class="filter-section-label" style="border-top:none;margin-top:0;padding-top:0;">Minimum Flight Time</div>
+                <div class="three-col">
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F4</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Total Time</div><div class="filter-input">Hours</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F5</span><div class="field-content"><div class="afield-label" style="font-size:9px;">PIC Time</div><div class="filter-input">Hours</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F6</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Instrument Time</div><div class="filter-input">Hours</div></div></div>
+                </div>
+                <div class="three-col">
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F7</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Cross Country</div><div class="filter-input">Hours</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F8</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Night Time</div><div class="filter-input">Hours</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F9</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Turbine Time</div><div class="filter-input">Hours</div></div></div>
+                </div>
+                <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F10</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Multi-Engine Time <span style="color:#e05555;">(Fixed Wing only)</span></div><div class="filter-input" style="max-width:160px;">Hours</div></div></div>
+
+                <div class="filter-section-label">Pilot-specific Filters</div>
+                <div class="two-col">
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F11</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Sector / Industry</div><div class="filter-input">Search industries...</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F12</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Pilot Type</div><div class="filter-input">Select Pilot Type ▾</div></div></div>
+                </div>
+                <div class="two-col">
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F13</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Certifications</div><div class="filter-input">Search certifications...</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F14</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Airframe</div><div class="filter-input">Search airframes...</div></div></div>
+                </div>
+                <div class="two-col">
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F15</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Unlisted Airframe</div><div class="filter-input">Type here</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F16</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Availability Type</div><div class="filter-input">Select Availability ▾</div></div></div>
+                </div>
+              </div>
+
+              <!-- ── STATE B: Mechanic selected (F3b) ── -->
+              <div style="border:2px solid #6b93e0;border-radius:8px;padding:12px;margin-bottom:14px;">
+                <div style="font-size:9px;font-weight:700;color:#6b93e0;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Filter State B — Mechanic (F3b active)</div>
+                <div class="two-col">
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F17</span><div class="field-content"><div class="afield-label" style="font-size:9px;">What type of aircraft do you need a mechanic for? <span style="color:#aaa;">(Select all that apply)</span></div><div class="filter-input">Select aircraft types...</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F18</span><div class="field-content"><div class="afield-label" style="font-size:9px;">What Airframe do you need your mechanic to work on?</div><div class="filter-input">Search airframes...</div></div></div>
+                </div>
+                <div class="two-col">
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F19</span><div class="field-content"><div class="afield-label" style="font-size:9px;">If Airframe isn't listed, Please list here</div><div class="filter-input">Type here</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F20</span><div class="field-content"><div class="afield-label" style="font-size:9px;">What do you need your mechanic to be proficient in? <span style="color:#aaa;">(Select all that apply)</span></div><div class="filter-input">Select proficiencies...</div></div></div>
+                </div>
+                <div class="two-col">
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F21</span><div class="field-content"><div class="afield-label" style="font-size:9px;">What minimum experience would you like your mechanic to have?</div><div class="filter-input">In years</div></div></div>
+                  <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F22</span><div class="field-content"><div class="afield-label" style="font-size:9px;">What type of availability do you need from your Mechanic?</div><div class="filter-input">Select Availability ▾</div></div></div>
+                </div>
+              </div>
+
+              <!-- ── STATE C: General selected (F3c) ── -->
+              <div style="border:2px solid #1a9e8f;border-radius:8px;padding:12px;margin-bottom:14px;">
+                <div style="font-size:9px;font-weight:700;color:#1a9e8f;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Filter State C — General Laborer (F3c active)</div>
+                <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F23</span><div class="field-content"><div class="afield-label" style="font-size:9px;">What type of availability do you need from your General Laborer?</div><div class="filter-input" style="max-width:280px;">Select Availability ▾</div></div></div>
+              </div>
+
+              <!-- ── SHARED: Location + For Hire + Search (all states) ── -->
+              <div class="filter-section-label" style="border-top:2px solid #eee;">Location Preferences <span style="color:#888;font-size:9px;text-transform:none;font-weight:400;">(shown for all professional types)</span></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
+                <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F24</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Country</div><div class="filter-input">Select country ▾</div></div></div>
+                <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F25</span><div class="field-content"><div class="afield-label" style="font-size:9px;">State</div><div class="filter-input">Select country first ▾</div></div></div>
+                <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F26</span><div class="field-content"><div class="afield-label" style="font-size:9px;">City</div><div class="filter-input">Select country first ▾</div></div></div>
+                <div class="afield"><span class="field-id-tag sub">CP-MK-S1-F27</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Search Radius</div><div class="filter-input">25 miles ▾</div></div></div>
+              </div>
+              <div class="afield" style="margin-top:8px;">
+                <span class="field-id-tag sub">CP-MK-S1-F28</span>
+                <div class="field-content">
+                  <div class="afield-inner checkbox-style"><div class="fake-checkbox checked"></div>
+                    <div>
+                      <div style="font-size:10px;color:#555;">Only show professionals marked as "For Hire"</div>
+                      <div style="font-size:9px;color:#aaa;">Filter to only see operators actively looking for work opportunities</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="save-btn" style="margin-top:10px;">SEARCH</div>
+            </div>
+
+            <div class="sub-label">Results — Professional Cards</div>
+            <div class="pro-card">
+              <div class="pro-header">
+                <div>
+                  <div style="font-size:9px;color:#aaa;">JOINED: 12/13/2025</div>
+                  <div class="pro-name">Troy S. ✓</div>
+                  <div class="pro-location">📍 Modesto, California, United States</div>
+                </div>
+                <div class="pro-btns" style="margin-top:0;">
+                  <span class="field-id-tag sub" style="margin-top:0;">F29a</span>
+                  <div class="see-more-btn">SEE MORE</div>
+                  <span class="field-id-tag sub" style="margin-top:0;">F29b</span>
+                  <div class="save-pro-btn">SAVE</div>
+                </div>
+              </div>
+              <div class="pro-grid">
+                <div class="pro-row">Industry <span>Aviation</span></div>
+                <div class="pro-row">Profession <span>Rotorcraft Pilot</span></div>
+                <div class="pro-row">Status <span class="status-unavail">Not Available</span></div>
+                <div class="pro-row">Type of Work <span>Full Time, On-Call</span></div>
+              </div>
+            </div>
+            <div class="afield"><span class="field-id-tag">CP-MK-S1-F29</span><div class="field-content"><div class="afield-label">Professional Result Card <span class="opt">(repeating per result)</span></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S1-F1</span><div class="legend-info"><div class="lbl">Create Job Button</div><div class="typ">Action button</div><div class="note">Navigates to CP-JE-S1</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S1-F2</span><div class="legend-info"><div class="lbl">Search Filter Toggle</div><div class="typ">Collapsible panel header</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S1-F3</span><div class="legend-info"><div class="lbl">Professional Type</div><div class="typ">Radio group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F3a</span><div class="legend-info"><div class="lbl">Pilot</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F3b</span><div class="legend-info"><div class="lbl">Mechanic</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F3c</span><div class="legend-info"><div class="lbl">General</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-sub">Pilot Filters (F3a)</div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F4</span><div class="legend-info"><div class="lbl">Total Time</div><div class="typ">Number input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F5</span><div class="legend-info"><div class="lbl">PIC Time</div><div class="typ">Number input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F6</span><div class="legend-info"><div class="lbl">Instrument Time</div><div class="typ">Number input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F7</span><div class="legend-info"><div class="lbl">Cross Country Time</div><div class="typ">Number input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F8</span><div class="legend-info"><div class="lbl">Night Time</div><div class="typ">Number input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F9</span><div class="legend-info"><div class="lbl">Turbine Time</div><div class="typ">Number input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F10</span><div class="legend-info"><div class="lbl">Multi-Engine Time</div><div class="typ">Number input</div><div class="note">Fixed Wing only</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F11</span><div class="legend-info"><div class="lbl">Sector / Industry</div><div class="typ">Search dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F12</span><div class="legend-info"><div class="lbl">Pilot Type</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F13</span><div class="legend-info"><div class="lbl">Certifications</div><div class="typ">Multi-select dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F14</span><div class="legend-info"><div class="lbl">Airframe</div><div class="typ">Search dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F15</span><div class="legend-info"><div class="lbl">Unlisted Airframe</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F16</span><div class="legend-info"><div class="lbl">Availability (Pilot)</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-sub">Mechanic Filters (F3b active)</div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F17</span><div class="legend-info"><div class="lbl">Aircraft type needed</div><div class="typ">Multi-select dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F18</span><div class="legend-info"><div class="lbl">Airframe to work on</div><div class="typ">Search dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F19</span><div class="legend-info"><div class="lbl">Unlisted Airframe</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F20</span><div class="legend-info"><div class="lbl">Proficiencies required</div><div class="typ">Multi-select dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F21</span><div class="legend-info"><div class="lbl">Min. experience (years)</div><div class="typ">Number input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F22</span><div class="legend-info"><div class="lbl">Availability type (Mechanic)</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-sub">General Laborer Filters (F3c active)</div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F23</span><div class="legend-info"><div class="lbl">Availability type (General Laborer)</div><div class="typ">Dropdown</div><div class="note">Only field shown for General type</div></div></div>
+        <div class="legend-sub">Location (all types)</div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F24</span><div class="legend-info"><div class="lbl">Country</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F25</span><div class="legend-info"><div class="lbl">State</div><div class="typ">Dropdown</div><div class="note">Unlocks after country selected</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F26</span><div class="legend-info"><div class="lbl">City</div><div class="typ">Dropdown</div><div class="note">Unlocks after state selected</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F27</span><div class="legend-info"><div class="lbl">Search Radius</div><div class="typ">Dropdown</div><div class="note">Default: 25 miles</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F28</span><div class="legend-info"><div class="lbl">For Hire Only</div><div class="typ">Checkbox</div><div class="note">Default: checked</div></div></div>
+        <div class="legend-sub">Result Cards</div>
+        <div class="legend-row"><span class="legend-badge">CP-MK-S1-F29</span><div class="legend-info"><div class="lbl">Professional Card</div><div class="typ">Repeating card</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F29a</span><div class="legend-info"><div class="lbl">See More</div><div class="typ">Button</div><div class="note">Opens detail modal</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-MK-S1-F29b</span><div class="legend-info"><div class="lbl">Save</div><div class="typ">Button</div><div class="note">Saves to Saved Talent tab</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CP-JE — JOB ENTRY / CREATE JOB
+  ════════════════════════════════════════════ -->
+  <div id="section-je" class="section-title">CP-JE — Job Entry</div>
+
+  <!-- CP-JE-S1 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id">CP-JE-S1</span>
+      <span class="screen-name">Create Job</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-topbar"></div>
+          <div class="mockup-inner">
+            <div class="back-link">← BACK</div>
+            <div class="mockup-breadcrumb">Aviation</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+              <div class="mockup-title" style="margin-bottom:0;">Create Job</div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <span class="field-id-tag">CP-JE-S1-F1</span>
+                <div class="draft-btn" style="font-size:10px;padding:6px 14px;">SAVE DRAFT</div>
+                <div class="post-btn" style="font-size:10px;padding:6px 14px;">POST</div>
+              </div>
+            </div>
+
+            <div class="credits-bar">
+              <span>💲 Available Credits &nbsp;&nbsp; SMS: 100 / Email: 1000</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="field-id-tag" style="background:rgba(255,255,255,0.25);">CP-JE-S1-F2</span>
+                <div class="buy-credits-btn">BUY CREDITS</div>
+              </div>
+            </div>
+
+            <!-- Job Type & Distribution -->
+            <div class="form-section">
+              <div class="afield">
+                <span class="field-id-tag">CP-JE-S1-F3</span>
+                <div class="field-content">
+                  <div class="afield-label">What type of skilled professional do you want to post a job for?</div>
+                  <div class="afield-inner radio-group" style="flex-direction:row;gap:16px;">
+                    <div class="radio-opt"><div class="fake-radio selected"></div> Pilot <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F3a</span></div>
+                    <div class="radio-opt"><div class="fake-radio"></div> Mechanic <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F3b</span></div>
+                    <div class="radio-opt"><div class="fake-radio"></div> General Laborer <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F3c</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="afield-label" style="margin-bottom:6px;font-size:10px;">Would you like to only post a job or also invite specific skilled professionals?</div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F4</span><div class="field-content"><div class="afield-inner checkbox-style"><div class="fake-checkbox checked"></div><span style="font-size:10px;">Post Job to Marketplace <span style="color:#999;">(This button ONLY posts to the marketplace. Not clicking this makes the job post private)</span></span></div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F5</span><div class="field-content"><div class="afield-inner checkbox-style"><div class="fake-checkbox checked"></div><span style="font-size:10px;">Only notify professionals marked as "Available"</span></div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F6</span><div class="field-content"><div class="afield-inner checkbox-style"><div class="fake-checkbox"></div><span style="font-size:10px;">Invite your favorite skilled Professionals</span></div></div></div>
+              <div class="quota-box">MONTHLY NOTIFICATION QUOTA &nbsp; Email: <span style="color:#1a9e8f;font-weight:700;">1000 / remaining</span> &nbsp; SMS: <span style="color:#1a9e8f;font-weight:700;">100 / remaining</span></div>
+              <div class="afield" style="margin-top:8px;"><span class="field-id-tag">CP-JE-S1-F7</span><div class="field-content"><div class="afield-inner checkbox-style"><div class="fake-checkbox"></div><span style="font-size:10px;">Send to all qualified users</span></div></div></div>
+            </div>
+
+            <!-- Job Details -->
+            <div class="form-section">
+              <div class="form-section-title">Job Details</div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F8</span><div class="field-content"><div class="afield-label">JOB TITLE <span class="req">*</span></div><div class="afield-inner">Type job title here</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F9</span><div class="field-content"><div class="afield-label">What type of aircraft do you need a pilot for?</div><div class="afield-inner dropdown-inner">Select aircraft type <span style="color:#aaa;">▾</span></div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F10</span><div class="field-content"><div class="afield-label">What sector is the job for?</div><div class="afield-inner dropdown-inner disabled">Please select aircraft type first <span style="color:#aaa;">▾</span></div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F11</span><div class="field-content"><div class="afield-label">What airframe will they be flying? <span class="opt">(Select all that apply)</span></div><div class="afield-inner dropdown-inner">Select airframe... <span style="color:#aaa;">▾</span></div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F12</span><div class="field-content"><div class="afield-label">If your airframe is not in the list, please add it here.</div><div class="afield-inner">Type custom airframe here...</div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F13</span><div class="field-content"><div class="afield-label">What's the job? <span class="req">*</span></div><div class="afield-inner textarea">For Example: Primary Mission description, Tasks and responsibilities, Duties beyond flying, housing, bonuses/perks, physical demands, etc.</div></div></div>
+            </div>
+
+            <!-- Minimum Requirements -->
+            <div class="form-section">
+              <div class="form-section-title">Minimum Pilot Requirements &nbsp;<span style="color:#1a9e8f;font-size:9px;font-weight:400;text-transform:none;">All fields are optional</span></div>
+              <div class="two-col">
+                <div class="afield"><span class="field-id-tag">CP-JE-S1-F14</span><div class="field-content"><div class="afield-label">Certifications <span class="opt">(Select all that are needed)</span></div><div class="afield-inner dropdown-inner">Select Rotorcraft certification... <span style="color:#aaa;">▾</span></div></div></div>
+                <div class="afield"><span class="field-id-tag">CP-JE-S1-F15</span><div class="field-content"><div class="afield-label">Medical</div><div class="afield-inner dropdown-inner">First Class <span style="color:#aaa;">▾</span></div></div></div>
+              </div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F16</span><div class="field-content"><div class="afield-label">Do they require any manufacturer or safety school certifications?</div><div class="afield-inner">Type schools here...</div></div></div>
+              <div class="three-col">
+                <div class="afield"><span class="field-id-tag sub">CP-JE-S1-F17</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Total Time</div><div class="filter-input">Hours</div></div></div>
+                <div class="afield"><span class="field-id-tag sub">CP-JE-S1-F18</span><div class="field-content"><div class="afield-label" style="font-size:9px;">PIC Time</div><div class="filter-input">Hours</div></div></div>
+                <div class="afield"><span class="field-id-tag sub">CP-JE-S1-F19</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Instrument Time</div><div class="filter-input">Hours</div></div></div>
+              </div>
+              <div class="three-col">
+                <div class="afield"><span class="field-id-tag sub">CP-JE-S1-F20</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Cross Country Time</div><div class="filter-input">Hours</div></div></div>
+                <div class="afield"><span class="field-id-tag sub">CP-JE-S1-F21</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Night Time</div><div class="filter-input">Hours</div></div></div>
+                <div class="afield"><span class="field-id-tag sub">CP-JE-S1-F22</span><div class="field-content"><div class="afield-label" style="font-size:9px;">Turbine Time</div><div class="filter-input">Hours</div></div></div>
+              </div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F23</span><div class="field-content"><div class="afield-label">Additional Requirements</div><div class="afield-inner textarea">For Example: Education levels, Part 135 vs. 61 Experience, Passport or Security clearance, or other supplemental skills and experience preferred.</div></div></div>
+            </div>
+
+            <!-- Location & Duration -->
+            <div class="form-section">
+              <div class="form-section-title">Location and Duration</div>
+              <div class="three-col">
+                <div class="afield"><span class="field-id-tag">CP-JE-S1-F24</span><div class="field-content"><div class="afield-label">Country</div><div class="afield-inner dropdown-inner">United States <span style="color:#aaa;">▾</span></div></div></div>
+                <div class="afield"><span class="field-id-tag">CP-JE-S1-F25</span><div class="field-content"><div class="afield-label">State</div><div class="afield-inner dropdown-inner">Select State <span style="color:#aaa;">▾</span></div></div></div>
+                <div class="afield"><span class="field-id-tag">CP-JE-S1-F26</span><div class="field-content"><div class="afield-label">City</div><div class="afield-inner dropdown-inner disabled">Select State First <span style="color:#aaa;">▾</span></div></div></div>
+              </div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F27</span><div class="field-content"><div class="afield-label">Is this a traveling job?</div><div class="afield-inner radio-group" style="flex-direction:row;gap:16px;"><div class="radio-opt"><div class="fake-radio selected"></div> Yes <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F27a</span></div><div class="radio-opt"><div class="fake-radio"></div> No <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F27b</span></div></div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F28</span><div class="field-content"><div class="afield-label">What type of availability do you need from your Pilot?</div><div class="afield-inner dropdown-inner">Seasonal <span style="color:#aaa;">▾</span></div></div></div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F29</span><div class="field-content"><div class="afield-label">When does the job start?</div><div class="afield-inner radio-group" style="flex-direction:row;gap:16px;"><div class="radio-opt"><div class="fake-radio"></div> Starts Immediately <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F29a</span></div><div class="radio-opt"><div class="fake-radio selected"></div> Future Hire <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F29b</span></div></div></div></div>
+              <div class="two-col">
+                <div class="afield"><span class="field-id-tag">CP-JE-S1-F30</span><div class="field-content"><div class="afield-label">START DATE</div><div class="afield-inner">mm/dd/yyyy</div></div></div>
+                <div class="afield"><span class="field-id-tag">CP-JE-S1-F31</span><div class="field-content"><div class="afield-label">END DATE <span class="opt">(Optional)</span></div><div class="afield-inner">mm/dd/yyyy</div></div></div>
+              </div>
+            </div>
+
+            <!-- Listed Pay -->
+            <div class="form-section">
+              <div class="form-section-title">Listed Pay <span style="color:#1a9e8f;font-size:9px;font-weight:400;text-transform:none;">(Optional)</span></div>
+              <div class="two-col">
+                <div class="afield"><span class="field-id-tag">CP-JE-S1-F32</span><div class="field-content"><div class="afield-label">How are you paying?</div><div class="afield-inner dropdown-inner">Hourly <span style="color:#aaa;">▾</span></div></div></div>
+                <div class="afield"><span class="field-id-tag">CP-JE-S1-F33</span><div class="field-content"><div class="afield-label">Amount</div><div class="afield-inner">$ 0.00</div></div></div>
+              </div>
+              <div class="afield"><span class="field-id-tag">CP-JE-S1-F34</span><div class="field-content"><div class="afield-label">Pay Negotiable based on experience</div><div class="afield-inner radio-group" style="flex-direction:row;gap:16px;"><div class="radio-opt"><div class="fake-radio"></div> Yes <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F34a</span></div><div class="radio-opt"><div class="fake-radio selected"></div> No <span style="font-size:9px;color:#3b6fd4;margin-left:3px;">← F34b</span></div></div></div></div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:4px;">
+              <div class="draft-btn">SAVE DRAFT</div>
+              <div class="post-btn">POST</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F1</span><div class="legend-info"><div class="lbl">Save Draft / Post (header)</div><div class="typ">Action buttons</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F2</span><div class="legend-info"><div class="lbl">Buy Credits</div><div class="typ">Action button</div><div class="note">Shown in credits bar</div></div></div>
+        <div class="legend-sub">Job Type & Distribution</div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F3</span><div class="legend-info"><div class="lbl">Professional Type</div><div class="typ">Radio group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F3a</span><div class="legend-info"><div class="lbl">Pilot</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F3b</span><div class="legend-info"><div class="lbl">Mechanic</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F3c</span><div class="legend-info"><div class="lbl">General Laborer</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F4</span><div class="legend-info"><div class="lbl">Post Job to Marketplace</div><div class="typ">Checkbox</div><div class="note">Unchecked = private post</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F5</span><div class="legend-info"><div class="lbl">Only notify Available professionals</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F6</span><div class="legend-info"><div class="lbl">Invite Favorite Professionals</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F7</span><div class="legend-info"><div class="lbl">Send to all qualified users</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-sub">Job Details</div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F8</span><div class="legend-info"><div class="lbl">Job Title</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F9</span><div class="legend-info"><div class="lbl">Aircraft Type</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F10</span><div class="legend-info"><div class="lbl">Sector</div><div class="typ">Dropdown</div><div class="note">Unlocks after aircraft type selected</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F11</span><div class="legend-info"><div class="lbl">Airframe</div><div class="typ">Multi-select dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F12</span><div class="legend-info"><div class="lbl">Unlisted Airframe</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F13</span><div class="legend-info"><div class="lbl">Job Description</div><div class="typ">Textarea</div></div></div>
+        <div class="legend-sub">Min. Requirements</div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F14</span><div class="legend-info"><div class="lbl">Certifications</div><div class="typ">Multi-select dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F15</span><div class="legend-info"><div class="lbl">Medical Class</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F16</span><div class="legend-info"><div class="lbl">Safety School Certifications</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F17–F22</span><div class="legend-info"><div class="lbl">Flight Time Fields</div><div class="typ">Number inputs</div><div class="note">Total, PIC, Instrument, Cross Country, Night, Turbine</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F23</span><div class="legend-info"><div class="lbl">Additional Requirements</div><div class="typ">Textarea</div></div></div>
+        <div class="legend-sub">Location & Duration</div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F24</span><div class="legend-info"><div class="lbl">Country</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F25</span><div class="legend-info"><div class="lbl">State</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F26</span><div class="legend-info"><div class="lbl">City</div><div class="typ">Dropdown</div><div class="note">Unlocks after state selected</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F27</span><div class="legend-info"><div class="lbl">Traveling Job?</div><div class="typ">Radio group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F27a</span><div class="legend-info"><div class="lbl">Yes</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F27b</span><div class="legend-info"><div class="lbl">No</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F28</span><div class="legend-info"><div class="lbl">Availability Type</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F29</span><div class="legend-info"><div class="lbl">Job Start Timing</div><div class="typ">Radio group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F29a</span><div class="legend-info"><div class="lbl">Starts Immediately</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F29b</span><div class="legend-info"><div class="lbl">Future Hire</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F30</span><div class="legend-info"><div class="lbl">Start Date</div><div class="typ">Date picker</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F31</span><div class="legend-info"><div class="lbl">End Date</div><div class="typ">Date picker</div><div class="note">Optional</div></div></div>
+        <div class="legend-sub">Listed Pay</div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F32</span><div class="legend-info"><div class="lbl">Pay Type</div><div class="typ">Dropdown</div><div class="note">Optional section</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F33</span><div class="legend-info"><div class="lbl">Pay Amount</div><div class="typ">Currency input</div></div></div>
+        <div class="legend-row"><span class="legend-badge">CP-JE-S1-F34</span><div class="legend-info"><div class="lbl">Pay Negotiable?</div><div class="typ">Radio group</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F34a</span><div class="legend-info"><div class="lbl">Yes</div><div class="typ">Radio option</div></div></div>
+        <div class="legend-row"><span class="legend-badge sub">CP-JE-S1-F34b</span><div class="legend-info"><div class="lbl">No</div><div class="typ">Radio option</div></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

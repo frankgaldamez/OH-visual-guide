@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OperatorsHub — Registration Flow Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; color: #333; }
+  header { background: #1a9e8f; color: white; padding: 20px 40px; }
+  header h1 { font-size: 20px; font-weight: 700; }
+  header p { font-size: 12px; opacity: 0.8; margin-top: 3px; }
+  .content { padding: 28px 40px; max-width: 960px; margin: 0 auto; }
+  .section-title { font-size: 16px; font-weight: 700; color: #1a9e8f; border-bottom: 2px solid #1a9e8f; padding-bottom: 6px; margin: 32px 0 18px; }
+
+  .screen-card { background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 28px; overflow: hidden; }
+  .screen-header { background: #f8f9fa; border-bottom: 1px solid #e8e8e8; padding: 12px 18px; display: flex; align-items: center; gap: 10px; }
+  .screen-id { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; letter-spacing: 0.5px; }
+  .badge-pre { background: #fef3e8; color: #e07b39; }
+  .badge-cp { background: #e8f0fe; color: #3b6fd4; }
+  .screen-name { font-size: 13px; font-weight: 600; color: #555; }
+  .screen-body { display: flex; }
+
+  .diagram-wrap { flex: 1; padding: 20px; background: #fafafa; border-right: 1px solid #eee; }
+  .mockup { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 20px 24px 24px; }
+  .mockup-title { text-align: center; font-size: 13px; font-weight: 700; color: #333; margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .mockup-subtitle { text-align: center; font-size: 11px; color: #888; margin-top: -12px; margin-bottom: 14px; }
+
+  .afield { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+  .field-id-tag { background: #1a9e8f; color: white; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 8px; letter-spacing: 0.3px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .field-id-tag.orange { background: #e07b39; }
+  .field-id-tag.blue { background: #3b6fd4; }
+  .field-id-tag.gray { background: #aaa; }
+  .field-content { flex: 1; }
+  .afield-label { font-size: 11px; color: #666; margin-bottom: 4px; }
+  .afield-inner { border: 2px solid #1a9e8f; border-radius: 6px; background: #f9fefe; padding: 8px 12px; min-height: 34px; }
+  .afield-inner.disabled { border-color: #ccc; background: #f5f5f5; opacity: 0.6; }
+  .afield-inner.checkbox-style { display: flex; align-items: center; gap: 8px; }
+  .fake-checkbox { width: 14px; height: 14px; border: 2px solid #1a9e8f; border-radius: 3px; flex-shrink: 0; }
+  .afield-inner.upload-style { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80px; background: #1a9e8f; border-color: #1a9e8f; color: white; gap: 4px; }
+  .upload-btn { background: white; color: #1a9e8f; font-size: 10px; font-weight: 700; padding: 4px 14px; border-radius: 20px; margin-top: 4px; }
+  .afield-inner.otp-style { display: flex; gap: 6px; justify-content: center; padding: 10px; }
+  .otp-box { width: 30px; height: 36px; border: 2px solid #1a9e8f; border-radius: 4px; background: white; }
+  .afield-placeholder { font-size: 11px; color: #ccc; }
+  .afield-text { font-size: 11px; color: #555; }
+
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .card-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .card-afield { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .card-afield .field-id-tag { align-self: flex-start; }
+  .card-inner { border: 2px solid #1a9e8f; border-radius: 6px; background: #f9fefe; padding: 14px 10px; text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .card-inner.disabled { border-color: #ccc; background: #f5f5f5; opacity: 0.6; }
+  .card-icon { font-size: 22px; }
+
+  .dropdown-inner { display: flex; justify-content: space-between; align-items: center; }
+
+  .progress-bar { display: flex; align-items: center; justify-content: center; margin-top: 18px; }
+  .prog-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #ccc; background: white; display: flex; align-items: center; justify-content: center; font-size: 8px; }
+  .prog-dot.done { background: #1a9e8f; border-color: #1a9e8f; color: white; }
+  .prog-dot.current { background: #a8dbd6; border-color: #a8dbd6; }
+  .prog-line { width: 28px; height: 2px; background: #ddd; }
+  .prog-line.done { background: #1a9e8f; }
+
+  .teal-bg { background: #1a9e8f; margin: -20px -24px 16px; border-radius: 8px 8px 0 0; }
+  .teal-text { color: white; padding: 10px 16px; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; }
+
+  .resend-link { text-align: center; font-size: 10px; color: #1a9e8f; text-decoration: underline; padding: 6px 0; }
+
+  .legend-panel { width: 240px; flex-shrink: 0; padding: 16px; }
+  .legend-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #aaa; margin-bottom: 10px; }
+  .legend-row { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; }
+  .legend-row:last-child { border-bottom: none; }
+  .legend-badge { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+  .legend-info .lbl { font-size: 11px; font-weight: 600; color: #333; }
+  .legend-info .typ { font-size: 10px; color: #888; }
+  .legend-info .note { font-size: 10px; color: #e07b39; font-style: italic; }
+
+  @media(max-width:720px) {
+    .screen-body { flex-direction: column; }
+    .legend-panel { width: 100%; border-top: 1px solid #eee; }
+    .content { padding: 16px; }
+    .card-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>OperatorsHub — Registration Flow Guide</h1>
+  <p>Annotated screen diagrams with Field IDs</p>
+</header>
+
+<div class="content">
+
+  <!-- PRE -->
+  <div class="section-title">PRE — Before Account Type Selection</div>
+
+  <!-- PRE-SU-S1 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id badge-pre">PRE-SU-S1</span>
+      <span class="screen-name">"What Is Your Field of Expertise?" — Industry Picker</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-title">What is your field of expertise?</div>
+          <div class="card-grid">
+            <div class="card-afield">
+              <span class="field-id-tag orange">PRE-SU-S1-F1</span>
+              <div class="card-inner"><div class="card-icon">🚁</div><div class="afield-text" style="font-size:10px;font-weight:600;">Aviation (rotor and fixed wing)</div></div>
+            </div>
+            <div class="card-afield">
+              <span class="field-id-tag gray">PRE-SU-S1-F2</span>
+              <div class="card-inner disabled"><div class="card-icon">🔥</div><div class="afield-text" style="font-size:10px;">Wildland Fire</div></div>
+            </div>
+            <div class="card-afield">
+              <span class="field-id-tag gray">PRE-SU-S1-F3</span>
+              <div class="card-inner disabled"><div class="card-icon">🛸</div><div class="afield-text" style="font-size:10px;">UAS</div></div>
+            </div>
+          </div>
+          <div class="card-grid-2">
+            <div class="card-afield">
+              <span class="field-id-tag gray">PRE-SU-S1-F4</span>
+              <div class="card-inner disabled"><div class="card-icon">🏗️</div><div class="afield-text" style="font-size:10px;">General Construction</div></div>
+            </div>
+            <div class="card-afield">
+              <span class="field-id-tag gray">PRE-SU-S1-F5</span>
+              <div class="card-inner disabled"><div class="card-icon">🌪️</div><div class="afield-text" style="font-size:10px;">Disaster Response</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge" style="background:#e07b39;color:white;">PRE-SU-S1-F1</span><div class="legend-info"><div class="lbl">Aviation</div><div class="typ">Checkbox card</div><div class="note">✅ Active in BETA</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#aaa;color:white;">PRE-SU-S1-F2</span><div class="legend-info"><div class="lbl">Wildland Fire</div><div class="typ">Checkbox card</div><div class="note">🔒 Not in BETA</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#aaa;color:white;">PRE-SU-S1-F3</span><div class="legend-info"><div class="lbl">UAS</div><div class="typ">Checkbox card</div><div class="note">🔒 Not in BETA</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#aaa;color:white;">PRE-SU-S1-F4</span><div class="legend-info"><div class="lbl">General Construction</div><div class="typ">Checkbox card</div><div class="note">🔒 Not in BETA</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#aaa;color:white;">PRE-SU-S1-F5</span><div class="legend-info"><div class="lbl">Disaster Response</div><div class="typ">Checkbox card</div><div class="note">🔒 Not in BETA</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP SECTION -->
+  <div class="section-title">CP-SU — Company Sign Up Flow</div>
+
+  <!-- CP-SU-S1 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id badge-cp">CP-SU-S1</span>
+      <span class="screen-name">"Let's Get Started" — Step 1 of 6</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="teal-bg"><div class="teal-text">Sign Up Aviation <span>🚁</span></div></div>
+          <div class="mockup-title">Let's Get Started.</div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S1-F1</span>
+            <div class="field-content">
+              <div class="afield-label">Company Name</div>
+              <div class="afield-inner"></div>
+            </div>
+          </div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S1-F2</span>
+            <div class="field-content">
+              <div class="afield-label">First Name</div>
+              <div class="afield-inner"></div>
+            </div>
+          </div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S1-F3</span>
+            <div class="field-content">
+              <div class="afield-label">Last Name</div>
+              <div class="afield-inner"></div>
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div class="prog-dot current"></div>
+            <div class="prog-line"></div><div class="prog-dot"></div>
+            <div class="prog-line"></div><div class="prog-dot"></div>
+            <div class="prog-line"></div><div class="prog-dot"></div>
+            <div class="prog-line"></div><div class="prog-dot"></div>
+            <div class="prog-line"></div><div class="prog-dot"></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S1-F1</span><div class="legend-info"><div class="lbl">Company Name</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S1-F2</span><div class="legend-info"><div class="lbl">First Name</div><div class="typ">Text input</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S1-F3</span><div class="legend-info"><div class="lbl">Last Name</div><div class="typ">Text input</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-SU-S2 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id badge-cp">CP-SU-S2</span>
+      <span class="screen-name">"What's Your Nearest City and State" — Step 2 of 6</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="teal-bg"><div class="teal-text">Sign Up Aviation <span>🚁</span></div></div>
+          <div class="mockup-title">Thanks! What's your nearest city and state</div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S2-F1</span>
+            <div class="field-content">
+              <div class="afield-label">What's your Country</div>
+              <div class="afield-inner dropdown-inner"><span class="afield-placeholder">Select a country</span><span style="color:#aaa;">▾</span></div>
+            </div>
+          </div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S2-F2</span>
+            <div class="field-content">
+              <div class="afield-label">What's your State</div>
+              <div class="afield-inner disabled dropdown-inner"><span class="afield-placeholder">Select a country first</span><span style="color:#aaa;">▾</span></div>
+            </div>
+          </div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S2-F3</span>
+            <div class="field-content">
+              <div class="afield-label">What's your City</div>
+              <div class="afield-inner disabled dropdown-inner"><span class="afield-placeholder">Select a country first</span><span style="color:#aaa;">▾</span></div>
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot current"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S2-F1</span><div class="legend-info"><div class="lbl">What's your Country</div><div class="typ">Dropdown</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S2-F2</span><div class="legend-info"><div class="lbl">What's your State</div><div class="typ">Dropdown</div><div class="note">Unlocks after country selected</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S2-F3</span><div class="legend-info"><div class="lbl">What's your City</div><div class="typ">Dropdown</div><div class="note">Unlocks after state selected</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-SU-S3 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id badge-cp">CP-SU-S3</span>
+      <span class="screen-name">"What's Your Contact Information" — Step 3 of 6</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-title">What's Your Contact Information</div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S3-F1</span>
+            <div class="field-content">
+              <div class="afield-label">What's your Email Address</div>
+              <div class="afield-inner"></div>
+            </div>
+          </div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S3-F2</span>
+            <div class="field-content">
+              <div class="afield-label">What's your Phone Number</div>
+              <div class="afield-inner"><span class="afield-placeholder">+1 (555) 555-5555</span></div>
+            </div>
+          </div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S3-F3</span>
+            <div class="field-content">
+              <div class="afield-inner checkbox-style"><div class="fake-checkbox"></div><div class="afield-text" style="font-size:10px;">I agree to the Terms & Conditions and Privacy Policy</div></div>
+            </div>
+          </div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S3-F4</span>
+            <div class="field-content">
+              <div class="afield-inner checkbox-style"><div class="fake-checkbox"></div><div class="afield-text" style="font-size:10px;">I agree to receive SMS notifications and understand that standard rates may apply</div></div>
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot current"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S3-F1</span><div class="legend-info"><div class="lbl">Email Address</div><div class="typ">Email input</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S3-F2</span><div class="legend-info"><div class="lbl">Phone Number</div><div class="typ">Phone input</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S3-F3</span><div class="legend-info"><div class="lbl">Terms & Conditions</div><div class="typ">Checkbox</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S3-F4</span><div class="legend-info"><div class="lbl">SMS Notifications</div><div class="typ">Checkbox</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-SU-S4 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id badge-cp">CP-SU-S4</span>
+      <span class="screen-name">"Upload a Photo of Yourself" — Step 4 of 6</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-title">Upload a Photo of Yourself <span style="color:#1a9e8f;font-size:11px;">(Optional)</span></div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S4-F1</span>
+            <div class="field-content">
+              <div class="afield-label">Photo Upload Area</div>
+              <div class="afield-inner upload-style">
+                <div style="font-size:11px;">Drag and drop files here</div>
+                <div style="font-size:10px;opacity:0.8;">or</div>
+                <div class="upload-btn">ADD FILES</div>
+              </div>
+            </div>
+          </div>
+          <div class="progress-bar" style="margin-top:14px;">
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot current"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S4-F1</span><div class="legend-info"><div class="lbl">Photo Upload Area</div><div class="typ">File upload / Drag & drop</div><div class="note">Optional step</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-SU-S5 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id badge-cp">CP-SU-S5</span>
+      <span class="screen-name">"Create Password" — Step 5 of 6</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-title">Create Password</div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S5-F1</span>
+            <div class="field-content">
+              <div class="afield-label">Password</div>
+              <div class="afield-inner" style="display:flex;justify-content:space-between;align-items:center;"><span style="color:#ccc;font-size:16px;letter-spacing:3px;">••••••</span><span style="font-size:14px;color:#aaa;">👁</span></div>
+            </div>
+          </div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S5-F2</span>
+            <div class="field-content">
+              <div class="afield-label">Confirm Password</div>
+              <div class="afield-inner" style="display:flex;justify-content:space-between;align-items:center;"><span style="color:#ccc;font-size:16px;letter-spacing:3px;">••••••</span><span style="font-size:14px;color:#aaa;">👁</span></div>
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot current"></div><div class="prog-line"></div>
+            <div class="prog-dot"></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S5-F1</span><div class="legend-info"><div class="lbl">Password</div><div class="typ">Password input</div><div class="note">Has show/hide toggle</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S5-F2</span><div class="legend-info"><div class="lbl">Confirm Password</div><div class="typ">Password input</div><div class="note">Has show/hide toggle</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CP-SU-S6 -->
+  <div class="screen-card">
+    <div class="screen-header">
+      <span class="screen-id badge-cp">CP-SU-S6</span>
+      <span class="screen-name">"Confirm Your Account" — Step 6 of 6</span>
+    </div>
+    <div class="screen-body">
+      <div class="diagram-wrap">
+        <div class="mockup">
+          <div class="mockup-title">Confirm Your Account</div>
+          <div class="mockup-subtitle">Enter verification code from email or phone SMS.</div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S6-F1</span>
+            <div class="field-content">
+              <div class="afield-label">Verification Code</div>
+              <div class="afield-inner otp-style">
+                <div class="otp-box"></div><div class="otp-box"></div><div class="otp-box"></div>
+                <div class="otp-box"></div><div class="otp-box"></div><div class="otp-box"></div>
+              </div>
+            </div>
+          </div>
+          <div class="afield">
+            <span class="field-id-tag blue">CP-SU-S6-F2</span>
+            <div class="field-content">
+              <div class="resend-link">↻ send the code again</div>
+            </div>
+          </div>
+          <div class="progress-bar" style="margin-top:20px;">
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot done">✓</div><div class="prog-line done"></div>
+            <div class="prog-dot current"></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-panel">
+        <div class="legend-title">Fields</div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S6-F1</span><div class="legend-info"><div class="lbl">Verification Code</div><div class="typ">6-digit OTP (split boxes)</div><div class="note">Sent via email or SMS</div></div></div>
+        <div class="legend-row"><span class="legend-badge" style="background:#3b6fd4;color:white;">CP-SU-S6-F2</span><div class="legend-info"><div class="lbl">"send the code again"</div><div class="typ">Resend link</div></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

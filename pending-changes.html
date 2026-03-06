@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Filter — Pending Changes</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; color: #333; font-size: 13px; }
+  header { background: #1a9e8f; color: white; padding: 20px 40px; }
+  header h1 { font-size: 20px; font-weight: 700; }
+  header p { font-size: 12px; opacity: 0.8; margin-top: 3px; }
+  .content { padding: 28px 40px; max-width: 860px; margin: 0 auto; }
+
+  .section-title { font-size: 15px; font-weight: 700; color: #1a9e8f; border-bottom: 2px solid #1a9e8f; padding-bottom: 6px; margin: 32px 0 16px; }
+  .job-type { font-size: 12px; font-weight: 700; color: #555; margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
+  .job-type::before { content: ''; display: block; width: 3px; height: 16px; background: #1a9e8f; border-radius: 2px; }
+
+  .change-card { background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 10px; overflow: hidden; display: flex; align-items: stretch; }
+  .change-type { width: 6px; flex-shrink: 0; }
+  .type-new { background: #1a9e8f; }
+  .type-mod { background: #e07b39; }
+  .type-del { background: #e05555; }
+  .change-body { padding: 12px 16px; flex: 1; }
+  .change-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+  .change-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
+  .label-new { background: #e6f7f5; color: #1a9e8f; }
+  .label-mod { background: #fef3e8; color: #e07b39; }
+  .label-del { background: #fde8e8; color: #e05555; }
+  .field-id { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; background: #d45a1a; color: white; flex-shrink: 0; }
+  .field-id.sp { background: #d45a1a; }
+  .field-id.cp { background: #3b6fd4; }
+  .field-id.new { background: #1a9e8f; }
+  .change-field { font-size: 12px; font-weight: 700; color: #333; }
+  .change-desc { font-size: 12px; color: #666; line-height: 1.5; }
+  .change-before-after { display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 11px; flex-wrap: wrap; }
+  .before { background: #f5f5f5; color: #999; padding: 3px 10px; border-radius: 4px; text-decoration: line-through; }
+  .after { background: #e6f7f5; color: #1a9e8f; font-weight: 600; padding: 3px 10px; border-radius: 4px; }
+  .arrow { color: #aaa; font-size: 14px; }
+
+  .note-box { background: #fffbf0; border: 1px solid #f5c842; border-radius: 8px; padding: 12px 16px; margin-top: 28px; font-size: 11px; color: #7a5f00; line-height: 1.8; }
+  .note-box strong { display: block; margin-bottom: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Search Filter — Pending Changes</h1>
+  <p>Not yet live · SP + Company · March 4, 2026</p>
+</header>
+
+<div class="content">
+
+  <!-- ── SP SEARCH FILTER ── -->
+  <div class="section-title">SP Search Filter — SP-MK-S3 / S3B / S3C</div>
+
+  <div class="job-type">✈️ Pilot Jobs (SP-MK-S3)</div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id sp">SP-MK-S3-F8</span>
+        <span class="change-field">Multi-Engine Time — scope clarification</span>
+      </div>
+      <div class="change-desc">Field will only apply to Fixed Wing. No change to the hour categories themselves.</div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id sp">SP-MK-S3-F9</span>
+        <span class="change-field">Aircraft type dropdown — restrict options</span>
+      </div>
+      <div class="change-desc">Dropdown restricted to two options only.</div>
+      <div class="change-before-after">
+        <span class="before">All Aircraft Types</span>
+        <span class="arrow">→</span>
+        <span class="after">Fixed Wing · Rotorcraft</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id sp">SP-MK-S3-F10</span>
+        <span class="change-field">Certifications — one label change</span>
+      </div>
+      <div class="change-desc">"ATP Fixed Wing (Airline Transport Pilot)" stays as-is. One label changes:</div>
+      <div class="change-before-after">
+        <span class="before">ATP</span>
+        <span class="arrow">→</span>
+        <span class="after">ATP-Helicopter</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id sp">SP-MK-S3-F12</span>
+        <span class="change-field">Type of work — add option</span>
+      </div>
+      <div class="change-desc">New answer option added to the existing dropdown.</div>
+      <div class="change-before-after">
+        <span class="after">+ Single Job</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-new"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-new">New</span>
+        <span class="field-id new">NEW FIELD</span>
+        <span class="change-field">Sector / Industry question — to be inserted after SP-MK-S3-F9</span>
+      </div>
+      <div class="change-desc">New question added with a dedicated answer key. Answer options TBD — confirm with team.</div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-new"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-new">New</span>
+        <span class="field-id new">NEW FIELD</span>
+        <span class="change-field">Airframe free-text — to be inserted after SP-MK-S3-F11</span>
+      </div>
+      <div class="change-desc">"If airframe isn't listed, please add it here" — free-text input added below the airframe dropdown (SP-MK-S3-F11).</div>
+    </div>
+  </div>
+
+  <div class="job-type">🔧 Mechanic Jobs (SP-MK-S3B)</div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id sp">SP-MK-S3B-F2</span>
+        <span class="change-field">Aircraft type dropdown — restrict options</span>
+      </div>
+      <div class="change-desc">"What type of aircraft are you experienced with?" — restrict to two options only.</div>
+      <div class="change-before-after">
+        <span class="before">All Aircraft Types</span>
+        <span class="arrow">→</span>
+        <span class="after">Fixed Wing · Rotorcraft</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-new"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-new">New</span>
+        <span class="field-id new">NEW FIELD</span>
+        <span class="change-field">Airframe experience dropdown — to be inserted after SP-MK-S3B-F2</span>
+      </div>
+      <div class="change-desc">"What airframe(s) do you have experience with?" — dropdown pulling from Master Dropdown Doc → Aviation Master → Airframes → Combined list.</div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-new"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-new">New</span>
+        <span class="field-id new">NEW FIELD</span>
+        <span class="change-field">Airframe free-text — to be inserted after new airframe dropdown</span>
+      </div>
+      <div class="change-desc">"If airframe isn't listed, please list here" — free-text input added below the new airframe dropdown.</div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id sp">SP-MK-S3B-F5</span>
+        <span class="change-field">Type of work — swap one option</span>
+      </div>
+      <div class="change-desc">Temporary change — bigger update coming later.</div>
+      <div class="change-before-after">
+        <span class="before">Emergency/AOG</span>
+        <span class="arrow">→</span>
+        <span class="after">Single Job</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── COMPANY SEARCH FILTER ── -->
+  <div class="section-title">Company Search Filter — CP-MK-S1</div>
+
+  <div class="job-type">✈️ Pilot Jobs (CP-MK-S1 — F3a active)</div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id cp">CP-MK-S1-F4 → F10</span>
+        <span class="change-field">Flight Hours — reorder + Multi-Engine scope fix</span>
+      </div>
+      <div class="change-desc">Reorder the existing 7 hour categories (F4–F10) as specified. Multi-Engine field (F10) will only apply to Fixed Wing — no change to the categories themselves.</div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id cp">CP-MK-S1-F12</span>
+        <span class="change-field">Pilot Type dropdown — restrict options</span>
+      </div>
+      <div class="change-desc">"What type of pilot do you need?" — restrict to two options only.</div>
+      <div class="change-before-after">
+        <span class="before">All Aircraft Types</span>
+        <span class="arrow">→</span>
+        <span class="after">Fixed Wing · Rotorcraft</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id cp">CP-MK-S1-F13</span>
+        <span class="change-field">Certifications — one label change</span>
+      </div>
+      <div class="change-desc">"ATP Fixed Wing (Airline Transport Pilot)" stays as-is. One label changes:</div>
+      <div class="change-before-after">
+        <span class="before">ATP</span>
+        <span class="arrow">→</span>
+        <span class="after">ATP-Helicopter</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="job-type">🔧 Mechanic Jobs (CP-MK-S1 — F3b active)</div>
+
+  <div class="change-card">
+    <div class="change-type type-mod"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-mod">Modified</span>
+        <span class="field-id cp">CP-MK-S1-F17</span>
+        <span class="change-field">Aircraft type dropdown — restrict options</span>
+      </div>
+      <div class="change-desc">"What type of aircraft do you need a mechanic for?" — restrict to two options only.</div>
+      <div class="change-before-after">
+        <span class="before">All Aircraft Types</span>
+        <span class="arrow">→</span>
+        <span class="after">Fixed Wing · Rotorcraft</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-new"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-new">New</span>
+        <span class="field-id new">NEW FIELD</span>
+        <span class="change-field">Mechanic minimum experience — to be inserted after CP-MK-S1-F21</span>
+      </div>
+      <div class="change-desc">"What minimum experience would you like your mechanic to have?" — format mirrors the SP-side experience fields (SP-MK-S3B-F4).</div>
+    </div>
+  </div>
+
+  <div class="change-card">
+    <div class="change-type type-del"></div>
+    <div class="change-body">
+      <div class="change-header">
+        <span class="change-label label-del">Removed</span>
+        <span class="field-id cp">CP-MK-S1-F22</span>
+        <span class="change-field">Availability type (Mechanic) — remove one option</span>
+      </div>
+      <div class="change-desc">Temporary removal — larger answer bank update planned for a future release.</div>
+      <div class="change-before-after">
+        <span class="before">Emergency</span>
+        <span class="arrow">→</span>
+        <span class="after" style="background:#fde8e8;color:#e05555;">Removed for now</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>⚠️ Items needing team confirmation before build</strong>
+    · SP Pilot (SP-MK-S3) — Sector / Industry new field: full list of answer options needed<br>
+    · SP Pilot (SP-MK-S3) — new fields will shift existing F-numbers; IDs to be reassigned after insertion<br>
+    · SP Mechanic (SP-MK-S3B) — new airframe fields will shift existing F-numbers; IDs to be reassigned after insertion
+  </div>
+
+</div>
+</body>
+</html>
